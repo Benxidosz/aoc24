@@ -1,3 +1,4 @@
+import com.sun.jdi.Value
 import java.io.File
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -5,13 +6,19 @@ import java.security.MessageDigest
 typealias IPos = Pair<Int, Int>
 
 fun IPos.add(other: IPos) = IPos(first + other.first, second + other.second)
+fun IPos.minus(other: IPos) = IPos(first - other.first, second - other.second)
 fun IPos.mul(other: Int) = IPos(first * other, second * other)
+fun IPos.rotate90CW() = IPos(second, first * -1)
 
 fun <T> List<List<T>>.isValidIndex(pos: IPos): Boolean {
     return pos.first in indices && pos.second in get(pos.first).indices
 }
 
 fun <T> List<List<T>>.get(pos: IPos) = get(pos.first)[pos.second]
+
+fun <T> MutableList<MutableList<T>>.set(pos: IPos, value: T) {
+    get(pos.first)[pos.second] = value
+}
 
 /**
  * Reads lines from the given input txt file.
